@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="BussinessService/BussinessService.csproj" />
+  <Project Path="DataAccessInMemmory/DataAccessInMemmory.csproj" Id="f228e8bd-3484-4348-94f4-08661ac94d6d" />
+  <Project Path="DataAccessSqlite/DataAccessSqlite.csproj" Id="4c359f7e-f4cd-4f83-8b99-e17866edcdc3" />
+  <Project Path="DkHoc/Application.csproj" />
+  <Project Path="Domain/Domain.csproj" />
+  <Project Path="UI/UI.csproj" Id="5d163178-4304-45b2-9fc4-904a2c515d0a" />
+</Solution>
