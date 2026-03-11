@@ -16,6 +16,7 @@ namespace DkHoc
             Seed(sp);
             var ui = sp.GetRequiredService<ConsoleUI>();
             ui.Start();
+
         }
         //static ServiceProvider SetupInMemmory()
         //{
