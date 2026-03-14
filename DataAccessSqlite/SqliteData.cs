@@ -1,4 +1,4 @@
-﻿using DkHoc.Core.Entity;
+﻿using Domain.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessSqlite

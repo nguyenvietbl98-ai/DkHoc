@@ -1,9 +1,10 @@
 ﻿
 using BussinessService;
+using Ports.Input;
 
 namespace DkHoc.UserInterface;
 
-public class ConsoleUI(StudentService studentService, CourseService courseService, RegistrationService registrationService)
+public class ConsoleUI(IStudentService studentService, ICourseService courseService, IRegistrationService registrationService)
 {
     public void Start()
     {

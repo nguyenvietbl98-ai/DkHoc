@@ -1,4 +1,4 @@
-﻿namespace DkHoc.Core.Entity;
+﻿namespace Domain.Core;
 
 public class Course
 {

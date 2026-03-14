@@ -1,5 +1,5 @@
-﻿using DkHoc.Core.Entity;
-namespace DkHoc.Ports
+﻿using Domain.Core;
+namespace Ports.Output
 {
     public interface ICourseRepository
     {

@@ -1,5 +1,5 @@
-﻿using DkHoc.Core.Entity;
-using DkHoc.Ports;
+﻿using Domain.Core;
+using Ports.Output;
 
 namespace DkHoc.DataAccess;
 

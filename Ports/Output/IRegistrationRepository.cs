@@ -1,6 +1,6 @@
-﻿using DkHoc.Core.Entity;
+﻿using Domain.Core;
 
-namespace DkHoc.Ports
+namespace Ports.Output
 {
     public interface IRegistrationRepository
     {

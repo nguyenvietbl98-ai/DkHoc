@@ -1,11 +1,12 @@
 ﻿using BussinessService;
-using DkHoc.Ports;
 using DataAccessInMemmory;
 using DataAccessSqlite;
 using DkHoc.DataAccess;
+using Ports.Output;
 using DkHoc.UserInterface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Ports.Input;
 namespace DkHoc
 {
     internal class Program
@@ -41,25 +42,31 @@ namespace DkHoc
         {
             var service = new ServiceCollection();
 
+            // 1. Map Output Ports -> Secondary Adapters (DataAccess)
             service.AddScoped<IStudentRepository, SqliteStudentRepository>();
-            service.AddScoped<ICourseRepository,SqliteCourseRepository>();
+            service.AddScoped<ICourseRepository, SqliteCourseRepository>();
             service.AddScoped<IRegistrationRepository, SqliteRegistrationRepository>();
             service.AddScoped<IUnitOfWork, SqliteUnitOfWork>();
 
+            // 2. ĐĂNG KÝ SQLITE DATA (Chính là đoạn code đang bị thiếu gây ra lỗi của bạn)
             var dbPath = Path.Combine(AppContext.BaseDirectory, "dkhoc.db");
             var conStri = $"Data Source={dbPath}";
-            service.AddDbContext<SqliteData>(o=> o.UseSqlite(conStri));
+            service.AddDbContext<SqliteData>(o => o.UseSqlite(conStri));
 
-            service.AddScoped<StudentService>();
-            service.AddScoped<CourseService>();
-            service.AddScoped<RegistrationService>();
+            // 3. Map Input Ports -> Core Use Cases (BussinessService)
+            service.AddScoped<IStudentService, StudentService>();
+            service.AddScoped<ICourseService, CourseService>();
+            service.AddScoped<IRegistrationService, RegistrationService>();
 
+            // 4. Đăng ký UI
             service.AddScoped<ConsoleUI>();
 
             var sp = service.BuildServiceProvider();
 
-            using(var scope = sp.CreateScope())
+            // 5. Khởi tạo Database
+            using (var scope = sp.CreateScope())
             {
+                // Nó sẽ bị lỗi ở dòng dưới này nếu phần 2 (AddDbContext) bị thiếu
                 var db = scope.ServiceProvider.GetRequiredService<SqliteData>();
                 db.Database.EnsureCreated();
             }
@@ -68,9 +75,11 @@ namespace DkHoc
         static void Seed(ServiceProvider sp)
         {
             var scope = sp.CreateScope();
-            var studentService = scope.ServiceProvider.GetRequiredService<StudentService>();
-            var courseService = scope.ServiceProvider.GetRequiredService<CourseService>();
-            var registrationService = scope.ServiceProvider.GetRequiredService<RegistrationService>();
+
+            // Yêu cầu (GetRequiredService) bằng Interface thay vì Class cụ thể
+            var studentService = scope.ServiceProvider.GetRequiredService<IStudentService>();
+            var courseService = scope.ServiceProvider.GetRequiredService<ICourseService>();
+            var registrationService = scope.ServiceProvider.GetRequiredService<IRegistrationService>();
 
             var student = studentService.GetAllStudent();
             var course = courseService.GetAllCourse();

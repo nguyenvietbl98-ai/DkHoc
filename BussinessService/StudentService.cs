@@ -1,10 +1,10 @@
-﻿
-using DkHoc.Ports;
-using DkHoc.Core.Entity;
+﻿using Ports.Input;
+using Domain.Core;
+using Ports.Output;
 
 namespace BussinessService;
 
-public class StudentService
+public class StudentService : IStudentService
 {
     private readonly IStudentRepository _repo;
     private readonly IUnitOfWork _uow;

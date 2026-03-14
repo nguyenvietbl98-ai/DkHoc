@@ -4,5 +4,6 @@
   <Project Path="DataAccessSqlite/DataAccessSqlite.csproj" Id="4c359f7e-f4cd-4f83-8b99-e17866edcdc3" />
   <Project Path="DkHoc/Application.csproj" />
   <Project Path="Domain/Domain.csproj" />
+  <Project Path="Ports/Ports.csproj" Id="365fbc73-76ed-4fdb-826c-b1cd526fc42e" />
   <Project Path="UI/UI.csproj" Id="5d163178-4304-45b2-9fc4-904a2c515d0a" />
 </Solution>

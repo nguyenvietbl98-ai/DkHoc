@@ -1,4 +1,4 @@
-﻿using DkHoc.Ports;
+﻿using Ports.Output;
 
 namespace DataAccessInMemmory
 {

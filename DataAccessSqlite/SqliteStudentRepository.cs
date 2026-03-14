@@ -1,6 +1,6 @@
 ﻿
-using DkHoc.Ports;
-using DkHoc.Core.Entity;
+using Ports.Output;
+using Domain.Core;
 
 namespace DataAccessSqlite
 {
