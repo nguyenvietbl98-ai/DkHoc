@@ -7,6 +7,11 @@ public class RegistrationRepository(InMemmoryDataStore db) : IRegistrationReposi
 {
     public void Create(Registration Registration)
     {
+        if (Registration.Id == 0)
+        {
+            var max = db.Registrations.Any() ? db.Registrations.Max(r => r.Id) : 0;
+            Registration.Id = max + 1;
+        }
         db.Registrations.Add(Registration);
     }
     public Registration GetbyId(int id) => db.Registrations.FirstOrDefault(i => i.Id == id);

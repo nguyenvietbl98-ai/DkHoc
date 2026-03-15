@@ -14,15 +14,14 @@ public class StudentService : IStudentService
         _uow = uow;
     }
 
-    public void Create(int id, string name, string @class)
+    public void Create(string name, string @class)
     {
-        Student student = new()
+       
+        Student student = new Student(name, @class)
         {
-            Id = id,
-            Name = name,
-            Class = @class,
             Credit = 0
         };
+
         _repo.Create(student);
         _uow.SaveChange();
     }

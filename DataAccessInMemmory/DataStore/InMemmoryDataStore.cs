@@ -4,7 +4,7 @@ namespace DkHoc.DataAccess;
 
 public class InMemmoryDataStore
 {
-    public List<Student> students = [];
-    public List<Course> Courses = [];
-    public List<Registration> Registrations = [];   //Chi de get, ko de set 
+    public List<Student> students = new List<Student>();
+    public List<Course> Courses = new List<Course>();
+    public List<Registration> Registrations = new List<Registration>();   //Chi de get, ko de set 
 }

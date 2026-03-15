@@ -15,18 +15,11 @@ public class CourseService : ICourseService
         _uow = uow;
     }
 
-    public void Create(string id, string couserName, int credit, string teacherName, int thu, int SiSoMax)
+    public void Create(string couserName, int credit, string teacherName, int thu, int SiSoMax)
     {
-        Course course = new Course()
-        {
-            CourseId = id,
-            CourseName = couserName,
-            Credit = credit,
-            TeacherName = teacherName,
-            Thu = thu,
-            SSmax = SiSoMax,
-            SSNow = 0
-        };
+      
+        var course = new Course(couserName, credit, teacherName, thu, SiSoMax);
+
         _course.Create(course);
         _uow.SaveChange();
     }

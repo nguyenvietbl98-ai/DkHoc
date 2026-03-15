@@ -4,7 +4,7 @@ namespace Ports.Input;
 
 public interface IStudentService
 {
-    void Create(int id, string name, string @class);
+    void Create(string name, string @class);
     IEnumerable<Student> GetAllStudent();
     Student GetById(int id);
     Student GetByName(string name);

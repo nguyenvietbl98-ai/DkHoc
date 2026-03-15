@@ -52,22 +52,20 @@ public class ConsoleUI(IStudentService studentService, ICourseService courseServ
     public void AddStudent()
     {
         Console.WriteLine("Please enter infomation");
-        Console.Write("Enter student id: "); int id = int.Parse(Console.ReadLine());
         Console.Write("Enter student name: "); string name = Console.ReadLine();
         Console.Write("Enter student class: "); string classm = (Console.ReadLine());
-        studentService.Create(id, name, classm);
+        studentService.Create(name, classm);
         Console.WriteLine("Add success");
     }
     public void AddCourse()
     {
         Console.WriteLine("Please enter infomation");
-        Console.Write("Enter course id: "); string id = (Console.ReadLine());
         Console.Write("Enter course name: "); string name = Console.ReadLine();
         Console.Write("Enter course credit(max 5): "); int credit = int.Parse(Console.ReadLine());
         Console.Write("Enter teacher name: "); string teacherName = Console.ReadLine();
         Console.Write("Enter Cousrse Day(2-->8): "); int thu = int.Parse(Console.ReadLine());
         Console.Write("Enter Cousrse max of student: "); int SiSo = int.Parse(Console.ReadLine());
-        courseService.Create(id, name, credit, teacherName, thu, SiSo);
+        courseService.Create(name, credit, teacherName, thu, SiSo);
         Console.WriteLine("Add success");
     }
     public void printAllStudent()
@@ -107,10 +105,9 @@ public class ConsoleUI(IStudentService studentService, ICourseService courseServ
     public void register()
     {
         Console.WriteLine("---Register course---");
-        Console.Write("Enter Id: "); int id = int.Parse(Console.ReadLine());
         Console.Write("Enter student Id: "); int studentId = int.Parse(Console.ReadLine());
         Console.Write("Enter course Id: "); string courseId = (Console.ReadLine());
-      registrationService.Register(id, studentId, courseId);
+      registrationService.Register(studentId, courseId);
         
     }
     public void cancelRegister()

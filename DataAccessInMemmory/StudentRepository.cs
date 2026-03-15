@@ -7,6 +7,12 @@ public class StudentRepository(InMemmoryDataStore db) : IStudentRepository
 {
     public void Create(Student student)
     {
+        // assign Id if not set
+        if (student.Id == 0)
+        {
+            var max = db.students.Any() ? db.students.Max(s => s.Id) : 0;
+            student.Id = max + 1;
+        }
         db.students.Add(student);
     }
     public Student GetbyId(int id) => db.students.FirstOrDefault(i => i.Id == id);

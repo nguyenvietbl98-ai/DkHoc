@@ -19,7 +19,7 @@ public class RegistrationService : IRegistrationService
         _uow = uow;
     }
 
-    public void Register(int id, int studentId, string courseId)
+    public void Register(int studentId, string courseId)
     {
         var student = _student.GetbyId(studentId);
         if (student == null) throw new Exception("Ko co sinh vien");
@@ -31,13 +31,8 @@ public class RegistrationService : IRegistrationService
         if (student.LichHoc.Contains(course.Thu)) throw new Exception($"Trung lich thu {course.Thu}");
         if (student.Credit + course.Credit >= 15) throw new Exception("Qua tin chi cho phep");
 
-        Registration registration = new Registration()
-        {
-            Id = id,
-            StudentId = studentId,
-            CourseId = courseId,
-            TimeDangKy = DateTime.Now,
-        };
+ 
+        Registration registration = new Registration(studentId, courseId, DateTime.Now);
 
         student.Credit = student.Credit + course.Credit;
         course.SSNow++;

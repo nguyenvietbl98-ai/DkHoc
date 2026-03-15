@@ -42,31 +42,31 @@ namespace DkHoc
         {
             var service = new ServiceCollection();
 
-            // 1. Map Output Ports -> Secondary Adapters (DataAccess)
+            
             service.AddScoped<IStudentRepository, SqliteStudentRepository>();
             service.AddScoped<ICourseRepository, SqliteCourseRepository>();
             service.AddScoped<IRegistrationRepository, SqliteRegistrationRepository>();
             service.AddScoped<IUnitOfWork, SqliteUnitOfWork>();
 
-            // 2. ĐĂNG KÝ SQLITE DATA (Chính là đoạn code đang bị thiếu gây ra lỗi của bạn)
+            
             var dbPath = Path.Combine(AppContext.BaseDirectory, "dkhoc.db");
             var conStri = $"Data Source={dbPath}";
             service.AddDbContext<SqliteData>(o => o.UseSqlite(conStri));
 
-            // 3. Map Input Ports -> Core Use Cases (BussinessService)
+         
             service.AddScoped<IStudentService, StudentService>();
             service.AddScoped<ICourseService, CourseService>();
             service.AddScoped<IRegistrationService, RegistrationService>();
 
-            // 4. Đăng ký UI
+           
             service.AddScoped<ConsoleUI>();
 
             var sp = service.BuildServiceProvider();
 
-            // 5. Khởi tạo Database
+           
             using (var scope = sp.CreateScope())
             {
-                // Nó sẽ bị lỗi ở dòng dưới này nếu phần 2 (AddDbContext) bị thiếu
+              
                 var db = scope.ServiceProvider.GetRequiredService<SqliteData>();
                 db.Database.EnsureCreated();
             }
@@ -76,7 +76,7 @@ namespace DkHoc
         {
             var scope = sp.CreateScope();
 
-            // Yêu cầu (GetRequiredService) bằng Interface thay vì Class cụ thể
+            
             var studentService = scope.ServiceProvider.GetRequiredService<IStudentService>();
             var courseService = scope.ServiceProvider.GetRequiredService<ICourseService>();
             var registrationService = scope.ServiceProvider.GetRequiredService<IRegistrationService>();
@@ -87,19 +87,27 @@ namespace DkHoc
 
             if (!student.Any())
             {
-                studentService.Create(1, "Nam", "CNTT");
-                studentService.Create(2, "Duc", "KTCN");
-                studentService.Create(3, "Aanh", "T");
+                studentService.Create("Viet", "CNTT");
+                studentService.Create("Son", "KTCN");
+                studentService.Create("hòa", "T");
             }
             if (!course.Any())
             {
-                courseService.Create("1", "CNTT", 3, "Hoang", 3, 40);
-                courseService.Create("2", "Marketing", 4, "Thu", 4, 20);
-                courseService.Create("3", "Tech", 5, "Mibh", 3, 10);
+                courseService.Create("CNTT", 3, "Hoang", 3, 40);
+                courseService.Create("Marketing", 4, "Thu", 4, 20);
+                courseService.Create("Tech", 5, "Mibh", 3, 10);
             }
             if (!registration.Any())
             {
-                registrationService.Register(0, 2, "2");
+              
+                var studentsAfter = studentService.GetAllStudent().ToList();
+                var coursesAfter = courseService.GetAllCourse().ToList();
+                if (studentsAfter.Any() && coursesAfter.Any())
+                {
+                    var studentId = studentsAfter.First().Id;
+                    var courseId = coursesAfter.First().CourseId;
+                    registrationService.Register(studentId, courseId);
+                }
             }
         }
 
