@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Domain.Core.Course>
+<h2 class="mt-4 mb-3">Danh sách Khóa học</h2>
+<a href="/Course/Create" class="btn btn-success mb-3">Thêm khóa học mới</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Mã KH</th>
+            <th>Tên môn</th>
+            <th>Tín chỉ</th>
+            <th>Giảng viên</th>
+            <th>Thứ</th>
+            <th>Sĩ số</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.CourseId</td>
+                <td>@c.CourseName</td>
+                <td>@c.Credit</td>
+                <td>@c.TeacherName</td>
+                <td>@c.Thu</td>
+                <td>
+                    <span class="badge @(c.SSNow >= c.SSmax ? "bg-danger" : "bg-success")">
+                        @c.SSNow / @c.SSmax
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

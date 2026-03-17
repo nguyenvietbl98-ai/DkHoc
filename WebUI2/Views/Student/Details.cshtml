@@ -1,0 +1,26 @@
+﻿@model Domain.Core.Student
+<h2 class="mt-4 mb-3">Tra cứu chi tiết Sinh viên</h2>
+
+<form method="get" action="/Student/Details" class="d-flex mb-4" style="max-width: 400px;">
+    <input type="number" name="id" class="form-control me-2" placeholder="Nhập ID sinh viên..." required />
+    <button type="submit" class="btn btn-info text-white">Tìm kiếm</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@if (Model != null)
+{
+    <div class="card border-info" style="max-width: 500px;">
+        <div class="card-header bg-info text-white fw-bold">Thông tin chi tiết</div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>ID:</b> @Model.Id</li>
+            <li class="list-group-item"><b>Tên:</b> @Model.Name</li>
+            <li class="list-group-item"><b>Lớp:</b> @Model.Class</li>
+            <li class="list-group-item"><b>Tín chỉ hiện tại:</b> @Model.Credit / 15</li>
+            <li class="list-group-item"><b>Ngày đi học:</b> @(Model.LichHoc.Any() ? "Thứ " + string.Join(", ", Model.LichHoc) : "Trống")</li>
+        </ul>
+    </div>
+}

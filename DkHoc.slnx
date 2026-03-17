@@ -6,4 +6,6 @@
   <Project Path="Domain/Domain.csproj" />
   <Project Path="Ports/Ports.csproj" Id="365fbc73-76ed-4fdb-826c-b1cd526fc42e" />
   <Project Path="UI/UI.csproj" Id="5d163178-4304-45b2-9fc4-904a2c515d0a" />
+  <Project Path="WebUI3/WebUI3.csproj" Id="5a863151-4586-4bae-8348-c2b5540134c4" />
+  <Project Path="WpfUI2/WpfUI2.csproj" Id="296bd89d-cd08-438d-a9be-f1b2ba81b7eb" />
 </Solution>
