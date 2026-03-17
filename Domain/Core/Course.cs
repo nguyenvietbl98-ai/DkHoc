@@ -35,7 +35,7 @@ public class Course
         set
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentNullException(nameof(value), "CourseName cannot be null or whitespace");
             _courseName = value;
         }
     }
@@ -46,7 +46,7 @@ public class Course
         set
         {
             if (value <= 0 || value > 5)
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(value), value, "Credit must be between 1 and 5");
             _credit = value;
         }
     }
@@ -57,7 +57,7 @@ public class Course
         set
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentNullException(nameof(value), "TeacherName cannot be null or whitespace");
             _teacherName = value;
         }
     }
@@ -68,7 +68,7 @@ public class Course
         set
         {
             if (value < 2 || value > 8)
-                throw new ArgumentOutOfRangeException("Thu sai");
+                throw new ArgumentOutOfRangeException(nameof(value), value, "Thu must be between 2 and 8");
             _dateOfWe = value;
         }
     }
@@ -79,7 +79,7 @@ public class Course
         set
         {
             if (value <= 0 || value > 100)
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(value), value, "SSmax must be between 1 and 100");
             _ssmax = value;
         }
     }
@@ -89,8 +89,8 @@ public class Course
         get => _ssnow;
         set
         {
-            if (value < 0 || value > _ssmax)
-                throw new ArgumentOutOfRangeException();
+            if (value < 0 || (_ssmax > 0 && value > _ssmax))
+                throw new ArgumentOutOfRangeException(nameof(value), value, $"SSNow must be >= 0 and <= SSmax({_ssmax})");
             _ssnow = value;
         }
     }
