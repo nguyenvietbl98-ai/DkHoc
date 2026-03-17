@@ -4,10 +4,10 @@ public class Registration
 {
     private int _id;
     private int _studentId;
-    private string _courseId;
+    private int _courseId;
     private DateTime _timeDangKy;
 
-    public Registration(int studentId, string courseId, DateTime timeDangKy)
+    public Registration(int studentId, int courseId, DateTime timeDangKy)
     {
         StudentId = studentId;
         CourseId = courseId;
@@ -34,13 +34,13 @@ public class Registration
         }
     }
 
-    public string CourseId
+    public int CourseId
     {
         get => _courseId;
         set
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullException(nameof(value), "CourseId khong duoc rong");
+            if (value <= 0)
+                throw new ArgumentOutOfRangeException(nameof(value), "CourseId khong hop le");
 
             _courseId = value;
         }

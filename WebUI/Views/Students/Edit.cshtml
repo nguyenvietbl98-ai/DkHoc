@@ -1,0 +1,23 @@
+@model Domain.Core.Student
+
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<h2>Edit Student</h2>
+
+<form method="post" class="row g-3">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <div class="col-md-6">
+        <label class="form-label">Name</label>
+        <input class="form-control" name="name" value="@Model.Name" />
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Class</label>
+        <input class="form-control" name="class" value="@Model.Class" />
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="/Students">Cancel</a>
+    </div>
+</form>

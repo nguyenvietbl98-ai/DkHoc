@@ -19,7 +19,7 @@ public class RegistrationService : IRegistrationService
         _uow = uow;
     }
 
-    public void Register(int studentId, string courseId)
+    public void Register(int studentId, int courseId)
     {
         var student = _student.GetbyId(studentId);
         if (student == null) throw new Exception("Ko co sinh vien");

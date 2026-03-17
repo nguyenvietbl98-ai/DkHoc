@@ -1,0 +1,35 @@
+@model Domain.Core.Course
+
+@{
+    ViewData["Title"] = "Edit Course";
+}
+
+<h2>Edit Course</h2>
+
+<form method="post" class="row g-3">
+    <input type="hidden" name="id" value="@Model.CourseId" />
+    <div class="col-md-6">
+        <label class="form-label">Course Name</label>
+        <input class="form-control" name="courseName" value="@Model.CourseName" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Credit</label>
+        <input class="form-control" name="credit" type="number" value="@Model.Credit" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Teacher</label>
+        <input class="form-control" name="teacherName" value="@Model.TeacherName" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Thu</label>
+        <input class="form-control" name="thu" type="number" value="@Model.Thu" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">SS Max</label>
+        <input class="form-control" name="ssMax" type="number" value="@Model.SSmax" />
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="/Courses">Cancel</a>
+    </div>
+</form>

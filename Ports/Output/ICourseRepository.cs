@@ -4,9 +4,9 @@ namespace Ports.Output
     public interface ICourseRepository
     {
         void Create(Course course);
-        void Delete(string id);
+        void Delete(int id);
         IEnumerable<Course> GetAll();
-        Course GetbyId(string id);
+        Course GetbyId(int id);
         Course GetbyName(string name);
         void Update(Course Course);
     }

@@ -1,0 +1,40 @@
+@model IEnumerable<Domain.Core.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h2>Courses</h2>
+<p><a class="btn btn-primary" href="/Courses/Create">Create</a></p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Credit</th>
+            <th>Teacher</th>
+            <th>Thu</th>
+            <th>SSNow/SSMax</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.CourseId</td>
+                <td>@c.CourseName</td>
+                <td>@c.Credit</td>
+                <td>@c.TeacherName</td>
+                <td>@c.Thu</td>
+                <td>@c.SSNow / @c.SSmax</td>
+                <td>
+                    <a class="btn btn-sm btn-secondary" href="/Courses/Edit/@c.CourseId">Edit</a>
+                    <form method="post" asp-action="Delete" asp-route-id="@c.CourseId" onsubmit="return confirm('Delete?');" style="display:inline-block;margin-left:6px;">
+                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

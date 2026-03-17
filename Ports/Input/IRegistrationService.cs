@@ -4,7 +4,7 @@ namespace Ports.Input;
 
 public interface IRegistrationService
 {
-    void Register(int studentId, string courseId);
+    void Register(int studentId, int courseId);
     void CancelRegister(int registrationId);
     IEnumerable<Registration> GetRegistrationsByStudentId(int studentId);
     IEnumerable<Registration> GetAllRegistration();

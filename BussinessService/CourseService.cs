@@ -25,12 +25,26 @@ public class CourseService : ICourseService
     }
 
     public IEnumerable<Course> GetAllCourse() => _course.GetAll();
-    public Course GetById(string id) => _course.GetbyId(id);
+    public Course GetById(int id) => _course.GetbyId(id);
     public Course GetByName(string name) => _course.GetbyName(name);
-
-    public void Delete(string id)
+    public void Delete(int id)
     {
         _course.Delete(id);
+        _uow.SaveChange();
+    }
+
+    public void Update(int id, string couserName, int credit, string teacherName, int thu, int SiSoMax)
+    {
+        var course = _course.GetbyId(id);
+        if (course == null) throw new Exception("Khong tim thay lop hoc");
+
+        course.CourseName = couserName;
+        course.Credit = credit;
+        course.TeacherName = teacherName;
+        course.Thu = thu;
+        course.SSmax = SiSoMax;
+
+        _course.Update(course);
         _uow.SaveChange();
     }
 }

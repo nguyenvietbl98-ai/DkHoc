@@ -15,8 +15,11 @@ namespace DataAccessSqlite
 
         public void Delete(int id)
         {
-          var student = _db.Students.FirstOrDefault(x => x.Id == id);
-            _db.Students.Remove(student);
+            var student = _db.Students.FirstOrDefault(x => x.Id == id);
+            if (student != null)
+            {
+                _db.Students.Remove(student);
+            }
         }
 
         public Student GetbyId(int id) => _db.Students.FirstOrDefault(i => i.Id == id);

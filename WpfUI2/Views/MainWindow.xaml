@@ -34,7 +34,13 @@
                     </GroupBox>
 
                     <GroupBox Header="Show all Students" Grid.Row="2" Padding="10">
-                        <DataGrid ItemsSource="{Binding Students}" AutoGenerateColumns="True" IsReadOnly="True" AlternatingRowBackground="#f2f2f2"/>
+                        <DockPanel>
+                            <DataGrid x:Name="StudentsGrid" ItemsSource="{Binding Students}" AutoGenerateColumns="True" IsReadOnly="True" AlternatingRowBackground="#f2f2f2" SelectedItem="{Binding SelectedStudent, Mode=TwoWay}"/>
+                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                                <Button Content="Edit" Command="{Binding EditStudentCommand}" Width="80" Margin="0,0,8,0" Background="#2196F3" Foreground="White"/>
+                                <Button Content="Delete" Command="{Binding DeleteStudentCommand}" Width="80" Background="#F44336" Foreground="White"/>
+                            </StackPanel>
+                        </DockPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>
@@ -67,7 +73,13 @@
                     </GroupBox>
 
                     <GroupBox Header="Show all Courses" Grid.Row="1" Padding="10">
-                        <DataGrid ItemsSource="{Binding Courses}" AutoGenerateColumns="True" IsReadOnly="True" AlternatingRowBackground="#f2f2f2"/>
+                        <DockPanel>
+                            <DataGrid x:Name="CoursesGrid" ItemsSource="{Binding Courses}" AutoGenerateColumns="True" IsReadOnly="True" AlternatingRowBackground="#f2f2f2" SelectedItem="{Binding SelectedCourse, Mode=TwoWay}"/>
+                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                                <Button Content="Edit" Command="{Binding EditCourseCommand}" Width="80" Margin="0,0,8,0" Background="#2196F3" Foreground="White"/>
+                                <Button Content="Delete" Command="{Binding DeleteCourseCommand}" Width="80" Background="#F44336" Foreground="White"/>
+                            </StackPanel>
+                        </DockPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>

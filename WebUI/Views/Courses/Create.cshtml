@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Create Course";
+}
+
+<h2>Create Course</h2>
+
+<form method="post" class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label">Course Name</label>
+        <input class="form-control" name="courseName" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Credit</label>
+        <input class="form-control" name="credit" type="number" value="3" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Teacher</label>
+        <input class="form-control" name="teacherName" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Thu</label>
+        <input class="form-control" name="thu" type="number" value="3" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">SS Max</label>
+        <input class="form-control" name="ssMax" type="number" value="30" />
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn btn-secondary" href="/Courses">Cancel</a>
+    </div>
+</form>

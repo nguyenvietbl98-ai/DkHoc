@@ -40,6 +40,9 @@ namespace WpfUI2
 
         private string _studentDetailResult = "Nhập ID và ấn Search để xem chi tiết...";
         public string StudentDetailResult { get => _studentDetailResult; set { _studentDetailResult = value; OnPropertyChanged(); } }
+        private Domain.Core.Student _selectedStudent;
+        public Domain.Core.Student SelectedStudent { get => _selectedStudent; set { _selectedStudent = value; OnPropertyChanged(); } }
+        private int _editingStudentId;
 
         // --- Tab 2: Khóa học ---
         private string _newCourseName;
@@ -56,6 +59,9 @@ namespace WpfUI2
 
         private string _newCourseMax;
         public string NewCourseMax { get => _newCourseMax; set { _newCourseMax = value; OnPropertyChanged(); } }
+        private Domain.Core.Course _selectedCourse;
+        public Domain.Core.Course SelectedCourse { get => _selectedCourse; set { _selectedCourse = value; OnPropertyChanged(); } }
+        private int _editingCourseId;
 
         // --- Tab 3: Đăng ký ---
         private string _regStudentId;
@@ -72,8 +78,14 @@ namespace WpfUI2
 
         // ======================= CÁC LỆNH (COMMANDS) =======================
         public ICommand CreateStudentCommand { get; }
+        public ICommand UpdateStudentCommand { get; }
+        public ICommand DeleteStudentCommand { get; }
+        public ICommand EditStudentCommand { get; }
         public ICommand SearchStudentCommand { get; }
         public ICommand CreateCourseCommand { get; }
+        public ICommand UpdateCourseCommand { get; }
+        public ICommand DeleteCourseCommand { get; }
+        public ICommand EditCourseCommand { get; }
         public ICommand RegisterCourseCommand { get; }
         public ICommand CancelRegisterCommand { get; }
         public ICommand ViewRegistrationsCommand { get; }
@@ -87,8 +99,14 @@ namespace WpfUI2
 
             // Gắn lệnh vào các hàm xử lý
             CreateStudentCommand = new RelayCommand(ExecuteCreateStudent);
+            UpdateStudentCommand = new RelayCommand(ExecuteUpdateStudent, _ => _editingStudentId > 0);
+            DeleteStudentCommand = new RelayCommand(_ => ExecuteDeleteStudent(), _ => SelectedStudent != null);
+            EditStudentCommand = new RelayCommand(_ => ExecuteEditStudent(), _ => SelectedStudent != null);
             SearchStudentCommand = new RelayCommand(ExecuteSearchStudent);
             CreateCourseCommand = new RelayCommand(ExecuteCreateCourse);
+            UpdateCourseCommand = new RelayCommand(ExecuteUpdateCourse, _ => _editingCourseId > 0);
+            DeleteCourseCommand = new RelayCommand(_ => ExecuteDeleteCourse(), _ => SelectedCourse != null);
+            EditCourseCommand = new RelayCommand(_ => ExecuteEditCourse(), _ => SelectedCourse != null);
             RegisterCourseCommand = new RelayCommand(ExecuteRegisterCourse);
             CancelRegisterCommand = new RelayCommand(ExecuteCancelRegister);
             ViewRegistrationsCommand = new RelayCommand(ExecuteViewRegistrations);
@@ -112,6 +130,39 @@ namespace WpfUI2
                 _studentService.Create(NewStudentName, NewStudentClass);
                 MessageBox.Show("Thêm sinh viên thành công!");
                 NewStudentName = ""; NewStudentClass = "";
+                RefreshData();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Lỗi"); }
+        }
+
+        private void ExecuteEditStudent()
+        {
+            if (SelectedStudent == null) return;
+            _editingStudentId = SelectedStudent.Id;
+            NewStudentName = SelectedStudent.Name;
+            NewStudentClass = SelectedStudent.Class;
+        }
+
+        private void ExecuteUpdateStudent(object obj)
+        {
+            try
+            {
+                if (_editingStudentId <= 0) throw new Exception("No student selected for update");
+                _studentService.Update(_editingStudentId, NewStudentName, NewStudentClass);
+                MessageBox.Show("Cập nhật sinh viên thành công!");
+                NewStudentName = ""; NewStudentClass = ""; _editingStudentId = 0;
+                RefreshData();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Lỗi"); }
+        }
+
+        private void ExecuteDeleteStudent()
+        {
+            try
+            {
+                if (SelectedStudent == null) return;
+                _studentService.Delete(SelectedStudent.Id);
+                MessageBox.Show("Xóa sinh viên thành công!");
                 RefreshData();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Lỗi"); }
@@ -144,11 +195,47 @@ namespace WpfUI2
             catch (Exception ex) { MessageBox.Show(ex.Message, "Lỗi"); }
         }
 
+        private void ExecuteEditCourse()
+        {
+            if (SelectedCourse == null) return;
+            _editingCourseId = SelectedCourse.CourseId;
+            NewCourseName = SelectedCourse.CourseName;
+            NewCourseCredit = SelectedCourse.Credit.ToString();
+            NewCourseTeacher = SelectedCourse.TeacherName;
+            NewCourseDay = SelectedCourse.Thu.ToString();
+            NewCourseMax = SelectedCourse.SSmax.ToString();
+        }
+
+        private void ExecuteUpdateCourse(object obj)
+        {
+            try
+            {
+                if (_editingCourseId <= 0) throw new Exception("No course selected for update");
+                _courseService.Update(_editingCourseId, NewCourseName, int.Parse(NewCourseCredit), NewCourseTeacher, int.Parse(NewCourseDay), int.Parse(NewCourseMax));
+                MessageBox.Show("Cập nhật khóa học thành công!");
+                NewCourseName = ""; NewCourseCredit = ""; NewCourseTeacher = ""; NewCourseDay = ""; NewCourseMax = ""; _editingCourseId = 0;
+                RefreshData();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Lỗi"); }
+        }
+
+        private void ExecuteDeleteCourse()
+        {
+            try
+            {
+                if (SelectedCourse == null) return;
+                _courseService.Delete(SelectedCourse.CourseId);
+                MessageBox.Show("Xóa khóa học thành công!");
+                RefreshData();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Lỗi"); }
+        }
+
         private void ExecuteRegisterCourse(object obj)
         {
             try
             {
-                _registrationService.Register(int.Parse(RegStudentId), RegCourseId);
+                _registrationService.Register(int.Parse(RegStudentId), int.Parse(RegCourseId));
                 MessageBox.Show("Đăng ký thành công!");
                 RegStudentId = ""; RegCourseId = "";
                 RefreshData(); // Cập nhật lại Credit và Sĩ số

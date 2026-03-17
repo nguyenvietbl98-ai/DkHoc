@@ -2,7 +2,8 @@
 
 public class Course
 {
-    private string _courseId;
+    private int _courseId;
+    private static int _idCounter;
     private string _courseName;
     private int _credit;
     private string _teacherName;
@@ -12,7 +13,7 @@ public class Course
 
     public Course(string courseName, int credit, string teacherName, int thu, int ssmax)
     {
-        _courseId = Guid.NewGuid().ToString();
+        _courseId = System.Threading.Interlocked.Increment(ref _idCounter);
         CourseName = courseName;
         Credit = credit;
         TeacherName = teacherName;
@@ -23,7 +24,7 @@ public class Course
 
     protected Course() { }
 
-    public string CourseId
+    public int CourseId
     {
         get => _courseId;
         set => _courseId = value;

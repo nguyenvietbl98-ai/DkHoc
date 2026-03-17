@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Register Course";
+}
+
+<h2>Register Course</h2>
+
+<form method="post" class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label">Student</label>
+        <select class="form-select" name="studentId">
+            <option value="">-- select --</option>
+            @foreach (var s in (IEnumerable<Domain.Core.Student>)ViewBag.Students)
+            {
+                <option value="@s.Id">@s.Name (@s.Class)</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Course</label>
+        <select class="form-select" name="courseId">
+            <option value="">-- select --</option>
+            @foreach (var c in (IEnumerable<Domain.Core.Course>)ViewBag.Courses)
+            {
+                <option value="@c.CourseId">@c.CourseName (@c.Thu)</option>
+            }
+        </select>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Register</button>
+        <a class="btn btn-secondary" href="/Registrations">Cancel</a>
+    </div>
+</form>

@@ -1,5 +1,6 @@
 ﻿
 
+using BussinessService;
 using Ports.Input;
 
 namespace DkHoc.UserInterface;
@@ -8,16 +9,21 @@ public class ConsoleUI(IStudentService studentService, ICourseService courseServ
 {
     public void Start()
     {
+
         var menu = """
             ---MENU---
             [1] Create Student
             [2] Create Course
             [3] Show all Student
-            [4] Show detail Student(id)
-            [5] Show all course
-            [6] Register course
-            [7] Cancel course
-            [8] Show all register
+            [4] Show detail Student
+            [5] Update Student
+            [6] Delete Student
+            [7] Show all Course
+            [8] Update Course
+            [9] Delete Course
+            [10] Register course
+            [11] Cancel course
+            [12] Show register
             [0] Quit
             """;
         while (true)
@@ -34,10 +40,15 @@ public class ConsoleUI(IStudentService studentService, ICourseService courseServ
                     case "2": AddCourse(); break;
                     case "3": printAllStudent(); break;
                     case "4": printStudentId(); break;
-                    case "5": printAllCourse(); break;
-                    case "6": register(); break;
-                    case "7": cancelRegister(); break;
-                    case "8": printAllRegister(); break;
+                    case "5": UpdateStudent(); break;
+                    case "6": DeleteStudent(); break;
+                    case "7": printAllCourse(); break;
+                    case "8": UpdateCourse(); break;
+                        case "9": DeleteCourse(); break;
+                        case "10": register(); break;
+                                                case "11": cancelRegister(); break;
+                        case "12": printAllRegister(); break;
+
                     default: Console.WriteLine(" Command invalid"); break;
                 }
             }
@@ -107,7 +118,7 @@ public class ConsoleUI(IStudentService studentService, ICourseService courseServ
         Console.WriteLine("---Register course---");
         Console.Write("Enter student Id: "); int studentId = int.Parse(Console.ReadLine());
         Console.Write("Enter course Id: "); string courseId = (Console.ReadLine());
-      registrationService.Register(studentId, courseId);
+      registrationService.Register(studentId, int.Parse(courseId));
         
     }
     public void cancelRegister()
@@ -127,5 +138,96 @@ public class ConsoleUI(IStudentService studentService, ICourseService courseServ
         {
             Console.WriteLine($"{value.Id} - CourseCode: {value.CourseId} - Date: {value.TimeDangKy}");
         }
+    }
+    private void DeleteStudent()
+    {
+        Console.Write("Enter student Id: ");
+        if (!TryReadInt(out int id)) return;
+
+        Console.Write("Are you sure (Y/N)? ");
+        var confirm = Console.ReadLine();
+
+        if (confirm?.ToLower() == "y")
+        {
+            studentService.Delete(id);
+            Console.WriteLine("✅ Deleted");
+        }
+        else
+        {
+            Console.WriteLine("Cancelled");
+        }
+    }
+    private void UpdateStudent()
+    {
+        Console.Write("Enter student Id: ");
+        if (!TryReadInt(out int id)) return;
+
+        Console.Write("New name: ");
+        var name = Console.ReadLine();
+
+        Console.Write("New class: ");
+        var className = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(className))
+        {
+            Console.WriteLine("❌ Invalid input");
+            return;
+        }
+
+        studentService.Update(id, name, className);
+        Console.WriteLine("✅ Updated");
+    }
+    private void DeleteCourse()
+    {
+        Console.Write("Enter course Id: ");
+        var id = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            Console.WriteLine("❌ Invalid id");
+            return;
+        }
+
+        Console.Write("Are you sure (Y/N)? ");
+        var confirm = Console.ReadLine();
+
+        if (confirm?.ToLower() == "y")
+        {
+            courseService.Delete(int.Parse(id));
+            Console.WriteLine("✅ Deleted");
+        }
+    }
+    private void UpdateCourse()
+    {
+        Console.Write("Course Id: ");
+        var id = Console.ReadLine();
+
+        Console.Write("New name: ");
+        var name = Console.ReadLine();
+
+        Console.Write("New credit: ");
+        if (!TryReadInt(out int credit)) return;
+
+        Console.Write("New teacher: ");
+        var teacher = Console.ReadLine();
+
+        Console.Write("New day: ");
+        if (!TryReadInt(out int thu)) return;
+
+        Console.Write("New max: ");
+        if (!TryReadInt(out int max)) return;
+
+        courseService.Update(int.Parse(id), name, credit, teacher, thu, max);
+        Console.WriteLine("✅ Updated");
+    }
+    private bool TryReadInt(out int result)
+    {
+        var input = Console.ReadLine();
+        if (!int.TryParse(input, out result))
+        {
+            Console.WriteLine("❌ Invalid number");
+            return false;
+        }
+        return true;
     }
 }

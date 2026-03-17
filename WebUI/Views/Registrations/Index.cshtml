@@ -1,0 +1,35 @@
+@model IEnumerable<Domain.Core.Registration>
+
+@{
+    ViewData["Title"] = "Registrations";
+}
+
+<h2>Registrations</h2>
+<p><a class="btn btn-primary" href="/Registrations/Create">Register</a></p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>StudentId</th>
+            <th>CourseId</th>
+            <th>Time</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Id</td>
+                <td>@r.StudentId</td>
+                <td>@r.CourseId</td>
+                <td>@r.TimeDangKy</td>
+                <td>
+                    <form method="post" asp-action="Cancel" asp-route-id="@r.Id" onsubmit="return confirm('Cancel?');">
+                        <button class="btn btn-sm btn-danger" type="submit">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
